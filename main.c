@@ -2223,6 +2223,7 @@ main (int argc, char **argv, char **envp)
         p = variable_expand (default_goal_var->value);
       else
         {
+printf("HOLA\n");
           p = variable_buffer_output (variable_buffer, default_goal_var->value,
                                       strlen (default_goal_var->value));
           *p = '\0';
