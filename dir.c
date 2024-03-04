@@ -390,23 +390,15 @@ dirfile_hash_2 (const void *key)
 {
   return_ISTRING_HASH_2 (((struct dirfile const *) key)->name);
 }
-#include<string.h>
+
 static int
 dirfile_hash_cmp (const void *xv, const void *yv)
 {
   const struct dirfile *x = xv;
   const struct dirfile *y = yv;
-
   int result = x->length - y->length;
-  if(strcmp("Makefile", x->name) == 0){
-      printf("xlen: %d\n", x->length);
-      printf("ylen: %d\n", y->length);
-      printf("xname: %s\n", x->name);
-      printf("yname: %s\n", y->name);
-  }
   if (result)
     return result;
-
   return_ISTRING_COMPARE (x->name, y->name);
 }
 
@@ -632,14 +624,7 @@ dir_contents_file_exists_p (struct directory_contents *dir,
 	}
       dirfile_key.name = filename;
       dirfile_key.length = strlen (filename);
-      // This doesn't find Makefile in RV
-      if(strcmp("Makefile", filename) == 0){
-          printf("dirfile_key.name   %s\n", dirfile_key.name);
-          printf("dirfile_key.length %d\n", dirfile_key.length);
-      }
-
       df = hash_find_item (&dir->dirfiles, &dirfile_key);
-
       if (df)
         return !df->impossible;
     }
@@ -755,12 +740,8 @@ dir_contents_file_exists_p (struct directory_contents *dir,
 int
 dir_file_exists_p (const char *dirname, const char *filename)
 {
-int res = dir_contents_file_exists_p (find_directory (dirname)->contents,
+  return dir_contents_file_exists_p (find_directory (dirname)->contents,
 				     filename);
-  if(strcmp("Makefile", filename) == 0){
-    printf("EXISTS??? %d\n",res);
-  }
-  return res;
 }
 
 /* Return 1 if the file named NAME exists.  */
