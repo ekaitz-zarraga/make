@@ -1,3 +1,4 @@
+set -e
 tcc=${tcc:=tcc}
 > config.h
 echo 'int putenv(char *string) { return 0; }' > putenv_stub.c
